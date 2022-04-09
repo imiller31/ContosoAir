@@ -19,17 +19,13 @@
 #    - RESOURCE_GROUP (where your cluster is deployed)
 #    - CLUSTER_NAME (name of your AKS cluster)
 #    - CONTAINER_NAME (name of the container image you would like to push up to your ACR)
-#
-# 3. Choose the appropriate render engine for the bake step https://github.com/Azure/k8s-bake. The config below assumes Helm.
-#    Set your helmChart, overrideFiles, overrides, and helm-version to suit your configuration.
-#    - CHART_PATH (path to your helm chart)
-#    - CHART_OVERRIDE_PATH (path to your helm chart with override values)
+#    - DEPLOYMENT_MANIFEST_PATH (path to the manifest yaml for your deployment)
 #
 # For more information on GitHub Actions for Azure, refer to https://github.com/Azure/Actions
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
 # For more options with the actions used below please refer to https://github.com/Azure/login
 
-name: Build and deploy an app to AKS with Helm
+name: Build and deploy an app to AKS
 
 on:
   push:
@@ -42,8 +38,7 @@ env:
   CONTAINER_NAME: "contoso"
   RESOURCE_GROUP: "izroll-dev"
   CLUSTER_NAME: "krustlet"
-  CHART_PATH: "./charts"
-  CHART_OVERRIDE_PATH: "./charts/values.yaml"
+  DEPLOYMENT_MANIFEST_PATH: './manifests'
 
 jobs:
   build:
@@ -51,7 +46,7 @@ jobs:
       actions: read
       contents: read
       id-token: write
-      
+
     runs-on: ubuntu-latest
     steps:
     # Checks out the repository this file is in
@@ -64,7 +59,7 @@ jobs:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-    
+      
     # Builds and pushes an image up to your Azure Container Registry
     - name: Build and push image to ACR
       run: |
@@ -82,23 +77,11 @@ jobs:
       run: |
         az aks update -n ${{ env.CLUSTER_NAME }} -g ${{ env.RESOURCE_GROUP }} --attach-acr ${{ env.AZURE_CONTAINER_REGISTRY }}
 
-    # Runs Helm to create manifest files
-    - name: Bake deployment
-      uses: azure/k8s-bake@v2.1
-      with:
-        renderEngine: 'helm'
-        helmChart: ${{ env.CHART_PATH }}
-        overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}
-        overrides: |     
-          replicas:2
-        helm-version: 'latest' 
-      id: bake
-
-    # Deploys application based on manifest files from previous step
-    - name: Deploy application
+    # Deploys application based on given manifest file
+    - name: Deploys application
       uses: Azure/k8s-deploy@v3.0
       with:
         action: deploy
-        manifests: ${{ steps.bake.outputs.manifestsBundle }}
+        manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
         images: |
           ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
