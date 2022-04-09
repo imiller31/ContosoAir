@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: contosoair
+build:
+  artifacts:
+  - image: my-app
+    docker:
+      dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+    - manifests/deployment.yaml
+    - manifests/ingress.yaml
+    - manifests/service.yaml
