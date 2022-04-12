@@ -6,7 +6,7 @@ name: Build and deploy an app to AKS with Helm
   workflow_dispatch: null
 env:
   AZURE_CONTAINER_REGISTRY: izroll
-  CHART_OVERRIDE_PATH: ./charts/values.yaml
+  CHART_OVERRIDE_PATH: ./charts/production.yaml
   CHART_PATH: ./charts
   CLUSTER_NAME: krustlet
   CONTAINER_NAME: contoso
