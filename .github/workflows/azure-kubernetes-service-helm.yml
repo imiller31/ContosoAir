@@ -34,9 +34,6 @@ jobs:
       with:
         cluster-name: ${{ env.CLUSTER_NAME }}
         resource-group: ${{ env.RESOURCE_GROUP }}
-    - name: Attach ACR to AKS cluster
-      run: |
-        az aks update -n ${{ env.CLUSTER_NAME }} -g ${{ env.RESOURCE_GROUP }} --attach-acr ${{ env.AZURE_CONTAINER_REGISTRY }}
     - id: bake
       name: Bake deployment
       uses: azure/k8s-bake@v2.1
