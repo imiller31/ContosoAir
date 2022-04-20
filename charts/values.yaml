@@ -7,7 +7,7 @@ replicaCount: 1
 containerPort: 3000
 
 imageKey:
-  repository: contoso
+  repository: contosoair
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
