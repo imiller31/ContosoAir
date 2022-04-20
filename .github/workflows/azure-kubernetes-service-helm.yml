@@ -9,7 +9,7 @@ env:
   CHART_OVERRIDE_PATH: ./charts/production.yaml
   CHART_PATH: ./charts
   CLUSTER_NAME: krustlet
-  CONTAINER_NAME: contosoair3
+  CONTAINER_NAME: contosoair2
   RESOURCE_GROUP: izroll-dev
 jobs:
   build:

@@ -1,4 +1,4 @@
 imageKey:
-  repository: izroll.azurecr.io/contosoair3
+  repository: izroll.azurecr.io/contosoair2
   pullPolicy: IfNotPresent
   tag: latest
