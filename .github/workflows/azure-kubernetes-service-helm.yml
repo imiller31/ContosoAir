@@ -1,4 +1,4 @@
-name: Build and deploy an app to AKS with Kustomize
+name: Build and deploy an app to AKS with Helm
 "on":
   push:
     branches:
@@ -6,9 +6,10 @@ name: Build and deploy an app to AKS with Kustomize
   workflow_dispatch: null
 env:
   AZURE_CONTAINER_REGISTRY: izroll
+  CHART_OVERRIDE_PATH: ./charts/production.yaml
+  CHART_PATH: ./charts
   CLUSTER_NAME: krustlet
-  CONTAINER_NAME: contoso
-  KUSTOMIZE_PATH: ./overlays/production
+  CONTAINER_NAME: contosoair
   RESOURCE_GROUP: izroll-dev
 jobs:
   build:
@@ -37,9 +38,12 @@ jobs:
       name: Bake deployment
       uses: azure/k8s-bake@v2.1
       with:
-        kubectl-version: latest
-        kustomizationPath: ${{ env.KUSTOMIZE_PATH }}
-        renderEngine: kustomize
+        helm-version: latest
+        helmChart: ${{ env.CHART_PATH }}
+        overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}
+        overrides: |
+          replicas:2
+        renderEngine: helm
     - name: Deploy application
       uses: Azure/k8s-deploy@v3.0
       with:
