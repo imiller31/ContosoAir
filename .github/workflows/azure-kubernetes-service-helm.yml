@@ -2,14 +2,14 @@ name: Build and deploy an app to AKS with Helm
 "on":
   push:
     branches:
-    - master
+    - main
   workflow_dispatch: null
 env:
   AZURE_CONTAINER_REGISTRY: izroll
   CHART_OVERRIDE_PATH: ./charts/production.yaml
   CHART_PATH: ./charts
   CLUSTER_NAME: krustlet
-  CONTAINER_NAME: contosoair5
+  CONTAINER_NAME: contosoaria
   RESOURCE_GROUP: izroll-dev
 jobs:
   build:
