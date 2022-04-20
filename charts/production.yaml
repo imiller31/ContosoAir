@@ -1,4 +1,8 @@
 imageKey:
-  repository: izroll.azurecr.io/contosoair
+  repository: izroll.azurecr.io/contosoair5
   pullPolicy: IfNotPresent
   tag: latest
+service:
+  annotations: {}
+  type: LoadBalancer
+  port: "80"
