@@ -14,11 +14,8 @@ nameoverride: ""
 replicacount: 1
 service:
   annotations:
-    kubernetes.azure.com/ingress-host: resourceHost
-    kubernetes.azure.com/tls-cert-keyvault-uri: kvCert
+    kubernetes.azure.com/ingress-host: testIngress
+    kubernetes.azure.com/tls-cert-keyvault-uri: testKV
   port: 80
-  type: LoadBalancer
-serviceaccount:
-  create: true
-  name: ""
+  type: ClusterIP
 tolerations: []
