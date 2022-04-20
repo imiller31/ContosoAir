@@ -1,10 +1,8 @@
 imageKey:
-  repository: izroll.azurecr.io/contosoaria
+  repository: izroll.azurecr.io/contosoairdemo
   pullPolicy: IfNotPresent
   tag: latest
 service:
-  annotations:
-    kubernetes.azure.com/ingress-host: host.sa
-    kubernetes.azure.com/tls-cert-keyvault-uri: cert.sa
-  type: ClusterIP
+  annotations: {}
+  type: LoadBalancer
   port: "80"
