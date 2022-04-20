@@ -3,6 +3,8 @@ imageKey:
   pullPolicy: IfNotPresent
   tag: latest
 service:
-  annotations: {}
-  type: LoadBalancer
+  annotations:
+    kubernetes.azure.com/ingress-host: host.sa
+    kubernetes.azure.com/tls-cert-keyvault-uri: cert.sa
+  type: ClusterIP
   port: "80"
