@@ -76,12 +76,7 @@ jobs:
       with:
         resource-group: ${{ env.RESOURCE_GROUP }}
         cluster-name: ${{ env.CLUSTER_NAME }}
-
-    # Attaches ACR to your AKS Cluster
-    - name: Attach ACR to AKS cluster
-      run: |
-        az aks update -n ${{ env.CLUSTER_NAME }} -g ${{ env.RESOURCE_GROUP }} --attach-acr ${{ env.AZURE_CONTAINER_REGISTRY }}
-
+        
     # Runs Helm to create manifest files
     - name: Bake deployment
       uses: azure/k8s-bake@v2.1
