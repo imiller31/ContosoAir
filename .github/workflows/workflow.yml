@@ -43,7 +43,7 @@ env:
   RESOURCE_GROUP: "izroll-dev"
   CLUSTER_NAME: "ismille-demo"
   CHART_PATH: "./charts/"
-  CHART_OVERRIDE_PATH: "./charts/production.yaml
+  CHART_OVERRIDE_PATH: "./charts/production.yaml"
 
 jobs:
   build:
