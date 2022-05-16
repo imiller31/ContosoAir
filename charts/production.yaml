@@ -4,7 +4,7 @@ imageKey:
   tag: latest
 service:
   annotations:
-    kubernetes.azure.com/ingress-host: testhost
-    kubernetes.azure.com/tls-cert-keyvault-uri: testcert
+    kubernetes.azure.com/ingress-host: test
+    kubernetes.azure.com/tls-cert-keyvault-uri: test
   type: ClusterIP
-  port: "80"
+  port: "8080"
