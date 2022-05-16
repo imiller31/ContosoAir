@@ -1,5 +1,5 @@
 imageKey:
-  repository: izroll.azurecr.io/contosoairdemo
+  repository: izroll.azurecr.io/ismilledemo
   pullPolicy: IfNotPresent
   tag: latest
 service:
